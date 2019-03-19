@@ -7,6 +7,7 @@ import software.amazon.awssdk.services.ecs.model.DesiredStatus;
 import software.amazon.awssdk.services.ecs.model.ListTasksRequest;
 import software.amazon.awssdk.services.ecs.model.ListTasksResponse;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
 
@@ -26,8 +27,8 @@ public class EcsService {
         CompletableFuture<ListTasksResponse> taskArns = getTaskArns(ecsAsyncClient, cluster, serviceName, pageTaken);
         try {
             final ListTasksResponse listTasksResponse = taskArns.get(1, TimeUnit.MINUTES);
-            final String task = listTasksResponse.nextToken();
-            System.out.println("task: " + task);
+            final List<String> tasks = listTasksResponse.taskArns();
+            System.out.println("tasks: " + tasks);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
