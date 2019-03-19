@@ -19,6 +19,8 @@ public class EcsService {
 
         String cluster = System.getProperty("akka.discovery.aws-api-ecs-async.cluster", "my-cluster");
         String serviceName = System.getProperty("akka.management.cluster.bootstrap.contact-point-discovery.service-name", "my-service");
+        System.out.println("cluster: " + cluster + ", serviceName: " + serviceName);
+
         Optional<String> pageTaken = Optional.empty();
 
         CompletableFuture<ListTasksResponse> taskArns = getTaskArns(ecsAsyncClient, cluster, serviceName, pageTaken);
